@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Замена пробелов</title>
+  <style>
+    body{
+        background-color: #f3f2f2;
+        position: relative;
+    }
+    .box{
+        width: 800px;
+        height: 600px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 55px;
+    }
+    #output {
+      font-size: 20px;
+      color: blue;
+    }
+    #inputString{
+        width: 800px;
+        height: 20px;
+        font-size: 15px;
+    }
+    
+    .time {
+        display: flex;
+        justify-content: center;
+        font-size: 40px;
+        margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+    <div class="box">
+  <input type="text" id="inputString" placeholder="Пикни маркировку">
+  <div class="but">
+  <button onclick="replaceSpaces()">Заменить пробелы</button>
+  <button onclick="copyText()">Копировать</button>
+</div>
+  <p id="output"></p>
+</div>
+
+  <div class="time"></div>
+
+  <script>
+    function replaceSpaces() {
+      const inputString = document.getElementById("inputString").value;
+      const outputString = inputString.replace(/ /g, "/u001d") + "/u001d";
+      document.getElementById("output").textContent = outputString;
+    }
+
+    function copyText() {
+      const output = document.getElementById("output");
+      const range = document.createRange();
+      range.selectNodeContents(output);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand("copy");
+      
+    }
+
+
+    // Функция для отображения времени
+    function showTime() {
+      const date = new Date();
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const seconds = date.getSeconds().toString().padStart(2, '0');
+      const time = `${hours}:${minutes}:${seconds}`;
+      document.querySelector('.time').textContent = time;
+    }
+
+    // Вызов функции showTime каждые секунду
+    setInterval(showTime, 1000);
+  </script>
+</body>
+</html>
